@@ -1,6 +1,7 @@
 use std::{collections::HashMap, sync::{Arc, Mutex}};
 
 use bytes::Bytes;
+use redis::connection::Connection;
 use tokio::net::{TcpListener, TcpStream};
 
 type Db = Arc<Mutex<HashMap<String, Bytes>>>;
@@ -23,7 +24,7 @@ async fn main() {
 }
 
 async fn process(socket: TcpStream, db: Db) {
-    use mini_redis::{Command, Connection, Frame};
+    use mini_redis::{Command, Frame};
 
     let mut connection = Connection::new(socket);
 
